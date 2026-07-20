@@ -79,17 +79,34 @@ function popupHtml(p) {
     </div>`;
 }
 
+// Regroupement des pins proches (clustering) — indispensable dès qu'une zone
+// concentre beaucoup de participants (ex. la Loire).
+const cluster = L.markerClusterGroup({
+  maxClusterRadius: 44,
+  showCoverageOnHover: false,
+  spiderfyDistanceMultiplier: 1.4,
+  iconCreateFunction(c) {
+    const n = c.getChildCount();
+    return L.divIcon({
+      className: '',
+      html: `<div class="cluster-pin">${n}</div>`,
+      iconSize: [42, 42],
+      iconAnchor: [21, 21],
+    });
+  },
+}).addTo(map);
+
 const markers = new Map(); // id → L.marker
 PEOPLE.forEach(p => {
   const m = L.marker([p.lat, p.lng], { icon: personIcon(p) }).bindPopup(popupHtml(p));
   m._group = p.group;
-  m.addTo(map);
+  cluster.addLayer(m);
   markers.set(p.id, m);
 });
 
 function fitToVisible() {
   const pts = [];
-  markers.forEach(m => { if (map.hasLayer(m)) pts.push(m.getLatLng()); });
+  markers.forEach(m => { if (cluster.hasLayer(m)) pts.push(m.getLatLng()); });
   if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(0.2));
   else map.setView([45.7, 5.5], 6);
 }
@@ -201,8 +218,8 @@ function applyFilter(filter) {
   PEOPLE.forEach(p => {
     const m = markers.get(p.id);
     const show = filter === 'all' || p.group === filter;
-    if (show) { if (!map.hasLayer(m)) m.addTo(map); n++; }
-    else if (map.hasLayer(m)) map.removeLayer(m);
+    if (show) { if (!cluster.hasLayer(m)) cluster.addLayer(m); n++; }
+    else if (cluster.hasLayer(m)) cluster.removeLayer(m);
     const card = rcards.get(p.id);
     if (card) card.classList.toggle('is-hidden', !show);
   });

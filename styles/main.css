@@ -131,6 +131,17 @@ body {
 }
 .pin img { width: 100%; height: 100%; object-fit: cover; }
 .pin--40 { border-color: var(--gold); }
+.cluster-pin {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: rgba(255, 107, 0, 0.22);
+  color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.5), inset 0 0 0 4px rgba(7,9,14,.55);
+  backdrop-filter: blur(2px);
+}
 .pin--meet {
   width: 30px; height: 30px;
   border-radius: 50%;
