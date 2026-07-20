@@ -95,6 +95,56 @@ function fitToVisible() {
 }
 fitToVisible();
 
+/* ─── Prochains anniversaires ──────────────────────────────────────────────── */
+function nextBirthday(p) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  let d = new Date(now.getFullYear(), p.birthMonth - 1, p.birthDay);
+  if (d < today) d = new Date(now.getFullYear() + 1, p.birthMonth - 1, p.birthDay);
+  return { date: d, days: Math.round((d - today) / 86400000) };
+}
+function daysLabel(days) {
+  if (days === 0) return "aujourd'hui 🎉";
+  if (days === 1) return 'demain !';
+  if (days <= 7)  return `dans ${days} jours`;
+  return `dans ${days} jours`;
+}
+function avatarHtml(p, cls) {
+  return p.photo
+    ? `<img class="${cls}" src="${p.photo}" alt="${p.name}" loading="lazy">`
+    : `<div class="${cls}">${initials(p.name)}</div>`;
+}
+
+(function renderBirthdays() {
+  const withBday = PEOPLE.filter(p => p.birthDay && p.birthMonth)
+    .map(p => ({ p, ...nextBirthday(p) }))
+    .sort((a, b) => a.days - b.days);
+  if (!withBday.length) return;
+
+  const nextEl = document.getElementById('bday-next');
+  const listEl = document.getElementById('bday-list');
+
+  const top = withBday[0];
+  const modClass =
+    (top.days === 0 ? ' bday-next--today' : '') +
+    (top.p.group === '40' ? ' bday-next--40' : '');
+  nextEl.className = 'bday-next' + modClass;
+  nextEl.innerHTML = `
+    ${avatarHtml(top.p, 'bday-ava')}
+    <div class="bday-info">
+      <span class="bday-name">${top.p.name}</span>
+      <span class="bday-when">${daysLabel(top.days)}</span>
+      <span class="bday-date">${top.p.birthDay} ${MONTHS[top.p.birthMonth - 1]} · ${top.p.city}</span>
+    </div>`;
+
+  listEl.innerHTML = withBday.slice(1, 5).map(({ p, days }) => `
+    <div class="bday-row">
+      <span class="r-name">${p.name}</span>
+      <span class="r-date">${p.birthDay} ${MONTHS[p.birthMonth - 1]}</span>
+      <span class="r-days">${days === 0 ? "aujourd'hui" : 'dans ' + days + ' j'}</span>
+    </div>`).join('');
+})();
+
 /* ─── Trombinoscope ────────────────────────────────────────────────────────── */
 const rosterGrid = document.getElementById('roster-grid');
 const rcards = new Map(); // id → élément carte

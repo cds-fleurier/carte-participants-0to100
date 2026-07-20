@@ -178,6 +178,54 @@ body {
 .chip--100 { background: var(--accent-soft); color: #ffb37a; }
 .chip--40  { background: var(--gold-soft);   color: #ffe08a; }
 
+/* ─── Prochains anniversaires ──────────────────────────────────────────────── */
+.bday-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 18px 16px;
+}
+.bday-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; }
+.bday-next {
+  margin-top: 12px;
+  display: flex; align-items: center; gap: 14px;
+  background: linear-gradient(120deg, var(--accent-soft), transparent 70%);
+  border: 1px solid var(--accent-dim);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.bday-next.bday-next--40 {
+  background: linear-gradient(120deg, var(--gold-soft), transparent 70%);
+  border-color: rgba(245, 197, 24, 0.4);
+}
+.bday-next.bday-next--today { animation: bdaypulse 1.8s ease-in-out infinite; }
+@keyframes bdaypulse { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.18); } }
+.bday-ava {
+  width: 58px; height: 58px; flex: 0 0 auto;
+  border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--accent);
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 20px;
+  background: var(--surface-lo); color: var(--text);
+  overflow: hidden;
+}
+.bday-next--40 .bday-ava { border-color: var(--gold); }
+.bday-info { display: flex; flex-direction: column; gap: 2px; }
+.bday-name { font-weight: 800; font-size: 16px; }
+.bday-when { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; color: var(--accent); line-height: 1; }
+.bday-next--40 .bday-when { color: var(--gold); }
+.bday-date { color: var(--text-soft); font-size: 12px; }
+.bday-list { margin-top: 10px; display: grid; gap: 2px; }
+.bday-row {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 7px 4px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+.bday-row .r-name { font-weight: 600; }
+.bday-row .r-date { color: var(--text-soft); }
+.bday-row .r-days { margin-left: auto; color: var(--text-muted); font-size: 12px; }
+
 /* ─── Trombinoscope ────────────────────────────────────────────────────────── */
 .roster-card {
   background: var(--surface);
