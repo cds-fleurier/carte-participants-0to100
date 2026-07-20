@@ -54,7 +54,10 @@ body {
   line-height: 0.9;
   text-transform: uppercase;
 }
-.brand span { color: var(--accent); }
+.brand-to  { color: var(--text-soft); }
+.brand-40  { color: var(--gold); }
+.brand-amp { color: var(--text-muted); }
+.brand-100 { color: var(--accent); }
 .tagline {
   margin-top: 4px;
   color: var(--text-soft);
