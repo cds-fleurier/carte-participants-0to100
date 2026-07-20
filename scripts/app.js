@@ -57,17 +57,20 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 function personIcon(p) {
+  // Pin propre : initiales sur pastille colorée par projet (pas de photo — illisible à cette taille)
   const cls = p.group === '40' ? 'pin pin--40' : 'pin';
-  const inner = p.photo
-    ? `<img src="${p.photo}" alt="${p.name}" onerror="this.replaceWith(document.createTextNode('${initials(p.name)}'))">`
-    : initials(p.name);
-  return L.divIcon({ className: '', html: `<div class="${cls}">${inner}</div>`, iconSize: [42, 42], iconAnchor: [21, 21], popupAnchor: [0, -22] });
+  return L.divIcon({ className: '', html: `<div class="${cls}">${initials(p.name)}</div>`, iconSize: [42, 42], iconAnchor: [21, 21], popupAnchor: [0, -24] });
 }
 
 function popupHtml(p) {
   const chipCls = p.group === '40' ? 'chip chip--40' : 'chip chip--100';
   const bday = birthdayText(p);
+  const ringCls = p.group === '40' ? 'pop-photo pop-photo--40' : 'pop-photo';
+  const photo = p.photo
+    ? `<img class="${ringCls}" src="${p.photo}" alt="${p.name}" loading="lazy">`
+    : '';
   return `
+    ${photo}
     <div class="pop-name">${p.name}</div>
     <div class="pop-city">${p.city || ''}</div>
     <div class="pop-meta">
