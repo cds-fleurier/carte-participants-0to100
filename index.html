@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0 to 100 — La carte de la team</title>
+  <meta name="description" content="La carte interactive des participants 0 to 100 & 0 to 40 : d'où viennent-ils, et où se retrouver pour s'entraîner à mi-chemin." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet (carte OpenStreetMap, gratuit, sans clé) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <div class="app-shell">
+
+    <header class="hero">
+      <h1 class="brand">0 <span>to</span> 100</h1>
+      <p class="tagline">La carte de la team</p>
+    </header>
+
+    <!-- Filtres -->
+    <div class="toolbar">
+      <div class="segmented" role="tablist" aria-label="Filtrer par projet">
+        <button class="seg is-active" data-filter="all">Tous</button>
+        <button class="seg" data-filter="100"><i class="dot dot--100"></i>0 to 100</button>
+        <button class="seg" data-filter="40"><i class="dot dot--40"></i>0 to 40</button>
+      </div>
+      <p class="count" id="count"></p>
+    </div>
+
+    <!-- Carte -->
+    <div id="map" class="map-card"></div>
+
+    <!-- Feature « point de rendez-vous » -->
+    <section class="meet-card">
+      <h2 class="meet-title">📍 On s'entraîne où ?</h2>
+      <p class="meet-sub">Choisis-toi, choisis ton binôme → on trouve le point pile au milieu.</p>
+
+      <div class="meet-fields">
+        <label class="field">
+          <span>Moi</span>
+          <select id="meet-a"></select>
+        </label>
+        <span class="meet-amp">×</span>
+        <label class="field">
+          <span>Mon binôme</span>
+          <select id="meet-b"></select>
+        </label>
+      </div>
+
+      <button id="meet-go" class="meet-go">Trouver le point milieu</button>
+
+      <div id="meet-result" class="meet-result" hidden></div>
+    </section>
+
+    <footer class="foot">
+      <span>0 to 100 · 40 sédentaires → 100 km</span>
+    </footer>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="data/participants.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>
