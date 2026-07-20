@@ -226,7 +226,20 @@ body {
 .bday-when { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; color: var(--accent); line-height: 1; }
 .bday-next--40 .bday-when { color: var(--gold); }
 .bday-date { color: var(--text-soft); font-size: 12px; }
-.bday-list { margin-top: 10px; display: grid; gap: 2px; }
+.bday-list {
+  margin-top: 10px;
+  display: grid; gap: 2px;
+  max-height: 296px;              /* ~8 lignes ; au-delà → scroll interne */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hi) transparent;
+}
+.bday-list::-webkit-scrollbar { width: 8px; }
+.bday-list::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 8px; }
+.bday-list::-webkit-scrollbar-track { background: transparent; }
+.bday-row:first-child { border-top: 0; }
 .bday-row {
   display: flex; align-items: baseline; gap: 8px;
   padding: 7px 4px;
