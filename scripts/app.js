@@ -95,6 +95,55 @@ function fitToVisible() {
 }
 fitToVisible();
 
+/* ─── Trombinoscope ────────────────────────────────────────────────────────── */
+const rosterGrid = document.getElementById('roster-grid');
+const rcards = new Map(); // id → élément carte
+
+PEOPLE.slice()
+  .sort((a, b) => a.name.localeCompare(b.name, 'fr'))
+  .forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'rcard' + (p.group === '40' ? ' rcard--40' : '');
+    card.dataset.group = p.group;
+    const visual = p.photo
+      ? `<img class="rcard-photo" src="${p.photo}" alt="${p.name}" loading="lazy" data-id="${p.id}">`
+      : `<div class="rcard-nophoto">${initials(p.name)}</div>`;
+    const bday = birthdayText(p);
+    card.innerHTML = `
+      ${visual}
+      <div class="rcard-body">
+        <div class="rcard-name">${p.name}</div>
+        <div class="rcard-city">${p.city || ''} · ${groupLabel(p.group)}</div>
+        ${bday ? `<div class="rcard-bday">${bday}</div>` : ''}
+      </div>`;
+    rosterGrid.appendChild(card);
+    rcards.set(p.id, card);
+  });
+
+/* ─── Lightbox ─────────────────────────────────────────────────────────────── */
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+const lbCap = document.getElementById('lightbox-cap');
+
+function openLightbox(p) {
+  if (!p || !p.photo) return;
+  lbImg.src = p.photo;
+  lbImg.alt = p.name;
+  lbCap.innerHTML = `${p.name}<small>${p.city || ''} · ${groupLabel(p.group)}${birthdayText(p) ? ' · ' + birthdayText(p) : ''}</small>`;
+  lightbox.hidden = false;
+}
+function closeLightbox() { lightbox.hidden = true; lbImg.src = ''; }
+
+rosterGrid.addEventListener('click', e => {
+  const img = e.target.closest('.rcard-photo');
+  if (!img) return;
+  openLightbox(PEOPLE.find(p => p.id === img.dataset.id));
+});
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox || e.target.closest('.lightbox-close')) closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
+
 /* ─── Filtres ──────────────────────────────────────────────────────────────── */
 const countEl = document.getElementById('count');
 function applyFilter(filter) {
@@ -104,6 +153,8 @@ function applyFilter(filter) {
     const show = filter === 'all' || p.group === filter;
     if (show) { if (!map.hasLayer(m)) m.addTo(map); n++; }
     else if (map.hasLayer(m)) map.removeLayer(m);
+    const card = rcards.get(p.id);
+    if (card) card.classList.toggle('is-hidden', !show);
   });
   countEl.textContent = `${n} participant${n > 1 ? 's' : ''}`;
   fitToVisible();

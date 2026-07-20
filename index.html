@@ -38,6 +38,13 @@
     <!-- Carte -->
     <div id="map" class="map-card"></div>
 
+    <!-- Trombinoscope -->
+    <section class="roster-card">
+      <h2 class="roster-title">📸 Le trombinoscope</h2>
+      <p class="roster-sub">Toute la team. Clique sur une photo pour l'agrandir.</p>
+      <div id="roster-grid" class="roster-grid"></div>
+    </section>
+
     <!-- Feature « point de rendez-vous » -->
     <section class="meet-card">
       <h2 class="meet-title">📍 On s'entraîne où ?</h2>
@@ -64,6 +71,15 @@
       <span>0 to 100 · 40 sédentaires → 100 km</span>
     </footer>
 
+  </div>
+
+  <!-- Lightbox (agrandissement photo) -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button class="lightbox-close" aria-label="Fermer">✕</button>
+    <figure class="lightbox-fig">
+      <img id="lightbox-img" src="" alt="" />
+      <figcaption id="lightbox-cap"></figcaption>
+    </figure>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
