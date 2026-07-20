@@ -154,7 +154,7 @@ function avatarHtml(p, cls) {
       <span class="bday-date">${top.p.birthDay} ${MONTHS[top.p.birthMonth - 1]} · ${top.p.city}</span>
     </div>`;
 
-  listEl.innerHTML = withBday.slice(1, 5).map(({ p, days }) => `
+  listEl.innerHTML = withBday.slice(1).map(({ p, days }) => `
     <div class="bday-row">
       <span class="r-name">${p.name}</span>
       <span class="r-date">${p.birthDay} ${MONTHS[p.birthMonth - 1]}</span>
