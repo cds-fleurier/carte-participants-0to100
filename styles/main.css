@@ -316,6 +316,20 @@ body {
 .rcard-name { font-weight: 800; font-size: 14px; }
 .rcard-city { color: var(--text-soft); font-size: 12px; margin-top: 1px; }
 .rcard-bday { color: var(--text-muted); font-size: 12px; margin-top: 5px; }
+.rcard-map {
+  margin-top: 9px;
+  width: 100%;
+  appearance: none;
+  border: 1px solid var(--border-hi);
+  background: var(--surface-lo);
+  color: var(--text-soft);
+  font: inherit; font-size: 11px; font-weight: 600;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.rcard-map:hover { background: var(--accent-soft); color: var(--text); border-color: var(--accent-dim); }
 
 /* ─── Lightbox ─────────────────────────────────────────────────────────────── */
 .lightbox {

@@ -217,6 +217,7 @@ PEOPLE.slice()
         <div class="rcard-name">${p.name}</div>
         <div class="rcard-city">${p.city || ''} · ${groupLabel(p.group)}</div>
         ${bday ? `<div class="rcard-bday">${bday}</div>` : ''}
+        <button class="rcard-map" type="button" data-id="${p.id}">📍 Voir sur la carte</button>
       </div>`;
     rosterGrid.appendChild(card);
     rcards.set(p.id, card);
@@ -237,6 +238,18 @@ function openLightbox(p) {
 function closeLightbox() { lightbox.hidden = true; lbImg.src = ''; }
 
 rosterGrid.addEventListener('click', e => {
+  // Bouton « Voir sur la carte » → remonte, déplie le cluster, ouvre la popup
+  const btn = e.target.closest('.rcard-map');
+  if (btn) {
+    const m = markers.get(btn.dataset.id);
+    const p = PEOPLE.find(x => x.id === btn.dataset.id);
+    if (!m || !p) return;
+    document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (cluster.hasLayer(m)) cluster.zoomToShowLayer(m, () => m.openPopup());
+    else { map.setView([p.lat, p.lng], 12); m.openPopup(); }
+    return;
+  }
+  // Sinon, clic sur la photo → lightbox
   const img = e.target.closest('.rcard-photo');
   if (!img) return;
   openLightbox(PEOPLE.find(p => p.id === img.dataset.id));
