@@ -134,14 +134,17 @@ body {
 .cluster-pin {
   width: 42px; height: 42px;
   border-radius: 50%;
-  border: 2px solid var(--accent);
-  background: rgba(255, 107, 0, 0.22);
-  color: #fff;
+  border: 2px solid rgba(7, 9, 14, 0.55);
+  color: #120a03;
   display: grid; place-items: center;
   font-weight: 800; font-size: 15px;
-  box-shadow: 0 3px 10px rgba(0,0,0,.5), inset 0 0 0 4px rgba(7,9,14,.55);
-  backdrop-filter: blur(2px);
+  box-shadow: 0 3px 10px rgba(0,0,0,.5);
+  text-shadow: 0 1px 0 rgba(255,255,255,.25);
 }
+.cluster-pin--100 { background: var(--accent); }
+.cluster-pin--40  { background: var(--gold); }
+/* mixte 0to100 + 0to40 → moitié orange / moitié doré */
+.cluster-pin--mix { background: linear-gradient(90deg, var(--accent) 0 50%, var(--gold) 50% 100%); }
 .pin--meet {
   width: 30px; height: 30px;
   border-radius: 50%;

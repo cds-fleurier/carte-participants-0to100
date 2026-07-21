@@ -86,10 +86,16 @@ const cluster = L.markerClusterGroup({
   showCoverageOnHover: false,
   spiderfyDistanceMultiplier: 1.4,
   iconCreateFunction(c) {
+    const kids = c.getAllChildMarkers();
+    const has100 = kids.some(m => m._group === '100');
+    const has40  = kids.some(m => m._group === '40');
+    const mod = (has100 && has40) ? 'cluster-pin--mix'
+              : has40 ? 'cluster-pin--40'
+              : 'cluster-pin--100';
     const n = c.getChildCount();
     return L.divIcon({
       className: '',
-      html: `<div class="cluster-pin">${n}</div>`,
+      html: `<div class="cluster-pin ${mod}">${n}</div>`,
       iconSize: [42, 42],
       iconAnchor: [21, 21],
     });
