@@ -286,10 +286,25 @@ function fillSelect(sel, placeholder) {
 fillSelect(selA, '— toi —');
 fillSelect(selB, '— ton binôme —');
 
-let meetLayer = null; // groupe des éléments dessinés (ligne + pin milieu)
+let meetLayer = null;   // groupe des éléments dessinés (ligne + pin milieu)
+let meetMarker = null;  // le pin du point milieu (pour maj de sa popup)
+let meetReq = 0;        // anti-course entre deux recherches successives
 
 function clearMeet() {
-  if (meetLayer) { map.removeLayer(meetLayer); meetLayer = null; }
+  if (meetLayer) { map.removeLayer(meetLayer); meetLayer = null; meetMarker = null; }
+}
+
+// Géocodage inverse Nominatim : renvoie le nom de la ville/village au point donné
+// (1 requête, au clic). Renvoie null si indisponible (offline / quota / erreur).
+async function nearestPlace(lat, lng) {
+  try {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=10&accept-language=fr`;
+    const r = await fetch(url, { headers: { Accept: 'application/json' } });
+    if (!r.ok) return null;
+    const d = await r.json();
+    const a = d.address || {};
+    return a.city || a.town || a.village || a.municipality || a.county || null;
+  } catch { return null; }
 }
 
 function showMeet() {
@@ -312,27 +327,44 @@ function showMeet() {
   const dA = haversineKm(a, mid);
   const dB = haversineKm(b, mid);
   const total = haversineKm(a, b);
+  const coords = `${mid.lat.toFixed(4)}, ${mid.lng.toFixed(4)}`;
 
   // Dessin : ligne A—milieu—B + pin milieu
   const meetIcon = L.divIcon({ className: '', html: `<div class="pin--meet">📍</div>`, iconSize: [30, 30], iconAnchor: [15, 15] });
+  meetMarker = L.marker([mid.lat, mid.lng], { icon: meetIcon })
+    .bindPopup(`<div class="pop-name">Point milieu</div><div class="pop-city">pile entre ${a.city} et ${b.city}</div>`);
   meetLayer = L.layerGroup([
     L.polyline([[a.lat, a.lng], [mid.lat, mid.lng], [b.lat, b.lng]], {
       color: '#ffffff', weight: 2, opacity: 0.5, dashArray: '4 6',
     }),
-    L.marker([mid.lat, mid.lng], { icon: meetIcon })
-      .bindPopup(`<div class="pop-name">Point milieu</div><div class="pop-city">pile entre ${a.city} et ${b.city}</div>`),
+    meetMarker,
   ]).addTo(map);
 
   map.fitBounds(L.latLngBounds([[a.lat, a.lng], [b.lat, b.lng], [mid.lat, mid.lng]]).pad(0.25));
 
   resultEl.innerHTML = `
-    <div class="rdv">${mid.lat.toFixed(4)}, ${mid.lng.toFixed(4)}
-      <small>· le point pile au milieu</small></div>
+    <div class="rdv" id="rdv-place"><span class="rdv-load">📍 recherche du point de rendez-vous…</span>
+      <small>· ${coords}</small></div>
     <div class="legs">
       <div class="leg"><b>${a.name}</b><span>${a.city} → ${Math.round(dA)} km</span></div>
       <div class="leg"><b>${b.name}</b><span>${b.city} → ${Math.round(dB)} km</span></div>
     </div>
     <p class="meet-sub" style="margin-top:10px">Soit ${Math.round(total)} km entre vous deux — chacun fait la moitié du chemin.</p>`;
+
+  // Cherche la vraie ville la plus proche du milieu (asynchrone, fallback = coords)
+  const reqId = ++meetReq;
+  nearestPlace(mid.lat, mid.lng).then(place => {
+    if (reqId !== meetReq) return;                 // une recherche plus récente a eu lieu
+    const el = document.getElementById('rdv-place');
+    if (!el) return;
+    if (place) {
+      el.innerHTML = `${place} <small>· à mi-chemin (${coords})</small>`;
+      if (meetMarker) meetMarker.setPopupContent(
+        `<div class="pop-name">${place}</div><div class="pop-city">à mi-chemin entre ${a.city} et ${b.city}</div>`);
+    } else {
+      el.innerHTML = `${coords} <small>· le point pile au milieu</small>`;
+    }
+  });
 }
 
 document.getElementById('meet-go').addEventListener('click', showMeet);
