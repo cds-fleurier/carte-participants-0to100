@@ -37,4 +37,5 @@ window.PARTICIPANTS = [
   { id: "gautier",  name: "Gautier",  city: "Saint-Julien-en-Genevois", lat: 46.1445, lng: 6.0812, birthDay: 9, birthMonth: 10, group: "100", photo: "assets/photos/Gautier.jpeg" },
   { id: "josselin", name: "Josselin", city: "Beauzac",   lat: 45.2593, lng: 4.0993, birthDay: 3,  birthMonth: 3, group: "40",  photo: "assets/photos/Josselin.jpeg" },
   { id: "julien-c", name: "Julien C", city: "Beaugency", lat: 47.7779, lng: 1.6312, birthDay: 23, birthMonth: 8, group: "40",  photo: "assets/photos/JulienC.jpeg" },
+  { id: "laure",    name: "Laure",    city: "Chambœuf",  lat: 45.5772, lng: 4.3208, birthDay: 16, birthMonth: 6, group: "100", photo: "assets/photos/Laure.jpg" },
 ];
