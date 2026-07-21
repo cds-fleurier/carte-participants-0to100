@@ -38,4 +38,9 @@ window.PARTICIPANTS = [
   { id: "josselin", name: "Josselin", city: "Beauzac",   lat: 45.2593, lng: 4.0993, birthDay: 3,  birthMonth: 3, group: "40",  photo: "assets/photos/Josselin.jpeg" },
   { id: "julien-c", name: "Julien C", city: "Beaugency", lat: 47.7779, lng: 1.6312, birthDay: 23, birthMonth: 8, group: "40",  photo: "assets/photos/JulienC.jpeg" },
   { id: "laure",    name: "Laure",    city: "Chambœuf",  lat: 45.5772, lng: 4.3208, birthDay: 16, birthMonth: 6, group: "100", photo: "assets/photos/Laure.jpg" },
+  { id: "jonathan", name: "Jonathan", city: "Saint-Étienne", lat: 45.4401, lng: 4.3873, birthDay: 19, birthMonth: 2, group: "40",  photo: "assets/photos/Jonathan.jpeg" },
+  { id: "marine",   name: "Marine",   city: "Bayonne",   lat: 43.4945, lng: -1.4737, birthDay: 5,  birthMonth: 1, group: "100", photo: "assets/photos/Marine.jpeg" },
+  { id: "arthur",   name: "Arthur",   city: "La Grand-Croix", lat: 45.5035, lng: 4.5684, birthDay: 14, birthMonth: 6, group: "100", photo: "assets/photos/Arthur.jpeg" },
+  { id: "ben",      name: "Ben",      city: "La Fouillouse", lat: 45.5010, lng: 4.3157, birthDay: 6, birthMonth: 3, group: "40",  photo: "assets/photos/Ben.jpeg" },
+  { id: "pauline",  name: "Pauline",  city: "Saint-Héand", lat: 45.5296, lng: 4.3753, birthDay: 26, birthMonth: 2, group: "40",  photo: "assets/photos/Pauline.jpeg" },
 ];
