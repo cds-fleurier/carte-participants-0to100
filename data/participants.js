@@ -48,4 +48,6 @@ window.PARTICIPANTS = [
   { id: "margot",   name: "Margot",   city: "Sainte-Sigolène", lat: 45.2425, lng: 4.2360, birthDay: 15, birthMonth: 12, group: "100", photo: "assets/photos/Margot.jpeg" },
   { id: "yannick",  name: "Yannick",  city: "Besançon",  lat: 47.2380, lng: 6.0244, birthDay: 20, birthMonth: 3, group: "40",  photo: "assets/photos/Yannick.jpeg" },
   { id: "louise",   name: "Louise",   city: "Paris",     lat: 48.8535, lng: 2.3484, birthDay: 29, birthMonth: 11, group: "100", photo: "assets/photos/Louise.jpeg" },
+  { id: "yves",     name: "Yves",     city: "Saint-Étienne-de-Crossey", lat: 45.3782, lng: 5.6474, birthDay: 14, birthMonth: 7, group: "100", photo: "assets/photos/Yves.jpeg" },
+  { id: "marion",   name: "Marion",   city: "Saint-Avold", lat: 49.1043, lng: 6.7072, birthDay: 29, birthMonth: 5, group: "100", photo: "assets/photos/Marion.jpeg" },
 ];
