@@ -138,35 +138,64 @@ function avatarHtml(p, cls) {
     : `<div class="${cls}">${initials(p.name)}</div>`;
 }
 
-(function renderBirthdays() {
-  const withBday = PEOPLE.filter(p => p.birthDay && p.birthMonth)
+function renderBirthdays(list = PEOPLE) {
+  const withBday = list.filter(p => p.birthDay && p.birthMonth)
     .map(p => ({ p, ...nextBirthday(p) }))
     .sort((a, b) => a.days - b.days);
-  if (!withBday.length) return;
 
   const nextEl = document.getElementById('bday-next');
   const listEl = document.getElementById('bday-list');
+  if (!withBday.length) { nextEl.innerHTML = ''; listEl.innerHTML = ''; return; }
 
-  const top = withBday[0];
-  const modClass =
-    (top.days === 0 ? ' bday-next--today' : '') +
-    (top.p.group === '40' ? ' bday-next--40' : '');
-  nextEl.className = 'bday-next' + modClass;
-  nextEl.innerHTML = `
-    ${avatarHtml(top.p, 'bday-ava')}
-    <div class="bday-info">
-      <span class="bday-name">${top.p.name}</span>
-      <span class="bday-when">${daysLabel(top.days)}</span>
-      <span class="bday-date">${top.p.birthDay} ${MONTHS[top.p.birthMonth - 1]} · ${top.p.city}</span>
-    </div>`;
+  // Tous ceux qui partagent l'anniversaire le PLUS proche sont mis en avant ensemble
+  // (ex æquo, et notamment le jour J : days === 0).
+  const topDays = withBday[0].days;
+  const featured = withBday.filter(x => x.days === topDays);
+  const rest     = withBday.filter(x => x.days !== topDays);
 
-  listEl.innerHTML = withBday.slice(1).map(({ p, days }) => `
+  const when = daysLabel(topDays);
+  const dateStr = `${featured[0].p.birthDay} ${MONTHS[featured[0].p.birthMonth - 1]}`;
+  const allFeatured40 = featured.every(x => x.p.group === '40');
+  nextEl.className = 'bday-next'
+    + (topDays === 0 ? ' bday-next--today' : '')
+    + (allFeatured40 ? ' bday-next--40' : '')
+    + (featured.length > 1 ? ' bday-next--multi' : '');
+
+  if (featured.length === 1) {
+    const p = featured[0].p;
+    nextEl.innerHTML = `
+      ${avatarHtml(p, 'bday-ava')}
+      <div class="bday-info">
+        <span class="bday-name">${p.name}</span>
+        <span class="bday-when">${when}</span>
+        <span class="bday-date">${dateStr} · ${p.city}</span>
+      </div>`;
+  } else {
+    const people = featured.map(({ p }) => `
+      <div class="bday-person">
+        ${avatarHtml(p, 'bday-ava bday-ava--sm')}
+        <div class="bday-person-txt">
+          <span class="bday-name">${p.name}</span>
+          <span class="bday-date">${p.city}</span>
+        </div>
+      </div>`).join('');
+    nextEl.innerHTML = `
+      <div class="bday-lead">
+        <span class="bday-when">${when}</span>
+        <span class="bday-date">🎂 ${dateStr} · ${featured.length} le même jour</span>
+      </div>
+      <div class="bday-people">${people}</div>`;
+  }
+
+  listEl.innerHTML = rest.map(({ p, days }) => `
     <div class="bday-row">
       <span class="r-name">${p.name}</span>
       <span class="r-date">${p.birthDay} ${MONTHS[p.birthMonth - 1]}</span>
       <span class="r-days">${days === 0 ? "aujourd'hui" : 'dans ' + days + ' j'}</span>
     </div>`).join('');
-})();
+}
+window.renderBirthdays = renderBirthdays; // hook de test (ex æquo / jour J)
+renderBirthdays();
 
 /* ─── Trombinoscope ────────────────────────────────────────────────────────── */
 const rosterGrid = document.getElementById('roster-grid');

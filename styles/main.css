@@ -229,6 +229,23 @@ body {
 .bday-when { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; color: var(--accent); line-height: 1; }
 .bday-next--40 .bday-when { color: var(--gold); }
 .bday-date { color: var(--text-soft); font-size: 12px; }
+
+/* Bloc « en avant » avec plusieurs ex æquo (même jour / jour J) */
+.bday-next--multi { flex-direction: column; align-items: stretch; gap: 10px; }
+.bday-lead { display: flex; flex-direction: column; gap: 2px; }
+.bday-people { display: flex; flex-wrap: wrap; gap: 8px; }
+.bday-person {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 13px 5px 5px;
+}
+.bday-ava--sm { width: 40px; height: 40px; font-size: 15px; }
+.bday-person-txt { display: flex; flex-direction: column; line-height: 1.15; }
+.bday-person-txt .bday-name { font-size: 14px; }
+.bday-person-txt .bday-date { font-size: 11px; }
+
 .bday-list {
   margin-top: 10px;
   display: grid; gap: 2px;
