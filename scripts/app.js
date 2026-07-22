@@ -216,8 +216,10 @@ PEOPLE.slice()
       <div class="rcard-body">
         <div class="rcard-name">${p.name}</div>
         <div class="rcard-city">${p.city || ''} · ${groupLabel(p.group)}</div>
-        ${bday ? `<div class="rcard-bday">${bday}</div>` : ''}
-        <button class="rcard-map" type="button" data-id="${p.id}">📍 Voir sur la carte</button>
+        <div class="rcard-foot">
+          <div class="rcard-bday">${bday || ''}</div>
+          <button class="rcard-map" type="button" data-id="${p.id}">📍 Voir sur la carte</button>
+        </div>
       </div>`;
     rosterGrid.appendChild(card);
     rcards.set(p.id, card);
