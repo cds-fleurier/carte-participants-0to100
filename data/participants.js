@@ -57,4 +57,5 @@ window.PARTICIPANTS = [
   { id: "morgane",  name: "Morgane",  city: "Montrond-les-Bains", lat: 45.6433, lng: 4.2299, birthDay: 16, birthMonth: 9, group: "100", photo: "assets/photos/Morgane.jpeg" },
   { id: "jerome",   name: "Jerome",   city: "Apinac",    lat: 45.3803, lng: 3.9962, birthDay: null, birthMonth: null, group: "100", photo: "assets/photos/Jerome.jpeg" }, // date à confirmer (« 31 avril » invalide)
   { id: "virginie", name: "Virginie", city: "Saint-Romain-les-Atheux", lat: 45.3561, lng: 4.3769, birthDay: 17, birthMonth: 4, group: "100", photo: "assets/photos/Virginie.jpeg" },
+  { id: "aurore",   name: "Aurore",   city: "Chenereilles", lat: 45.4829, lng: 4.0808, birthDay: 24, birthMonth: 3, group: "100", photo: "assets/photos/Aurore.jpeg" },
 ];
