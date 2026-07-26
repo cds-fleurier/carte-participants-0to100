@@ -60,4 +60,5 @@ window.PARTICIPANTS = [
   { id: "aurore",   name: "Aurore",   city: "Chenereilles", lat: 45.4829, lng: 4.0808, birthDay: 24, birthMonth: 3, group: "40", photo: "assets/photos/Aurore.jpeg" },
   { id: "athenais", name: "Athénaïs", city: "Paris",     lat: 48.8589, lng: 2.3200, birthDay: 15, birthMonth: 1, group: "100", photo: "assets/photos/Athenais.jpeg" },
   { id: "thomas",   name: "Thomas",   city: "Brive-la-Gaillarde", lat: 45.1585, lng: 1.5332, birthDay: 1, birthMonth: 11, group: "100", photo: "assets/photos/Thomas.jpeg" },
+  { id: "lucie",    name: "Lucie",    city: "Gonnehem",  lat: 50.5623, lng: 2.5738, birthDay: 15, birthMonth: 12, group: "40",  photo: "" },
 ];
