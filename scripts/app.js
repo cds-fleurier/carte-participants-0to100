@@ -301,6 +301,16 @@ function fillSelect(sel, placeholder) {
 fillSelect(selA, '— toi —');
 fillSelect(selB, '— ton binôme —');
 
+// Identité partagée avec le calendrier et « Qui court où ? » (même origine → même localStorage)
+const TEAM_ME_KEY = 'team_me';
+try {
+  const me = localStorage.getItem(TEAM_ME_KEY);
+  if (me && PEOPLE.some(p => p.id === me)) selA.value = me;
+} catch { /* stockage indisponible */ }
+selA.addEventListener('change', () => {
+  try { if (selA.value) localStorage.setItem(TEAM_ME_KEY, selA.value); } catch { /* idem */ }
+});
+
 let meetLayer = null;   // groupe des éléments dessinés (ligne + pin milieu)
 let meetMarker = null;  // le pin du point milieu (pour maj de sa popup)
 let meetReq = 0;        // anti-course entre deux recherches successives
