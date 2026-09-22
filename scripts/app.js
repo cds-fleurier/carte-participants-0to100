@@ -9,6 +9,14 @@ const PEOPLE = (window.PARTICIPANTS || []).filter(p => typeof p.lat === 'number'
 const MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
 const groupLabel = g => (g === '40' ? '0 to 40' : '0 to 100');
 
+// Miniature carrée 320 px (assets/photos/thumb/<nom>.jpeg, générée par scripts/make_thumbs.py).
+// Utilisée partout sauf dans la lightbox, qui montre la photo d'origine.
+function thumb(p) {
+  if (!p.photo) return '';
+  if (/^https?:/.test(p.photo)) return p.photo;
+  return p.photo.replace(/^(.*\/)([^/]+)\.[a-z]+$/i, '$1thumb/$2.jpeg');
+}
+
 function initials(name) {
   const words = String(name).trim().split(/\s+/);
   const first = words[0]?.[0] || '?';
@@ -67,7 +75,7 @@ function popupHtml(p) {
   const bday = birthdayText(p);
   const ringCls = p.group === '40' ? 'pop-photo pop-photo--40' : 'pop-photo';
   const photo = p.photo
-    ? `<img class="${ringCls}" src="${p.photo}" alt="${p.name}" loading="lazy">`
+    ? `<img class="${ringCls}" src="${thumb(p)}" alt="${p.name}" loading="lazy">`
     : '';
   return `
     ${photo}
@@ -134,7 +142,7 @@ function daysLabel(days) {
 }
 function avatarHtml(p, cls) {
   return p.photo
-    ? `<img class="${cls}" src="${p.photo}" alt="${p.name}" loading="lazy">`
+    ? `<img class="${cls}" src="${thumb(p)}" alt="${p.name}" loading="lazy">`
     : `<div class="${cls}">${initials(p.name)}</div>`;
 }
 
@@ -208,7 +216,7 @@ PEOPLE.slice()
     card.className = 'rcard' + (p.group === '40' ? ' rcard--40' : '');
     card.dataset.group = p.group;
     const visual = p.photo
-      ? `<img class="rcard-photo" src="${p.photo}" alt="${p.name}" loading="lazy" data-id="${p.id}">`
+      ? `<img class="rcard-photo" src="${thumb(p)}" alt="${p.name}" loading="lazy" data-id="${p.id}">`
       : `<div class="rcard-nophoto">${initials(p.name)}</div>`;
     const bday = birthdayText(p);
     card.innerHTML = `

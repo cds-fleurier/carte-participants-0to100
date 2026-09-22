@@ -15,7 +15,8 @@ index.html            page unique
 styles/main.css       thème + carte + feature
 scripts/app.js        logique carte, filtres, point milieu
 data/participants.js  ← LES DONNÉES (à remplir)
-assets/photos/        photos des participants (optionnel)
+assets/photos/        photos des participants (optionnel) — originaux, servis par la lightbox
+assets/photos/thumb/  miniatures carrées 320 px générées par scripts/make_thumbs.py (avatars, trombi)
 ```
 
 ## Remplir les participants
@@ -30,7 +31,10 @@ assets/photos/        photos des participants (optionnel)
 ```
 
 - **lat/lng** d'une ville : https://nominatim.openstreetmap.org/ (ou demander à Claude).
-- **photo** : déposer le fichier dans `assets/photos/`, mettre le chemin. Vide = initiales.
+- **photo** : déposer le fichier dans `assets/photos/`, mettre le chemin, puis générer la
+  miniature : `~/agents/ShoppingWiz/.venv/bin/python scripts/make_thumbs.py` (Pillow requis ;
+  ne refait que les manquantes). Vide = initiales. Sans miniature, l'avatar est cassé (pas de
+  repli sur l'original).
 
 ## La feature « point milieu »
 Choix de deux participants → calcul du **point géographique médian** (great-circle
